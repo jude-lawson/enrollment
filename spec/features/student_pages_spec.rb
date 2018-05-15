@@ -31,4 +31,20 @@ RSpec.describe 'Student Pages' do
       end
     end
   end
+
+  context '/students/new' do
+    describe 'A user visits the new student page' do
+      it 'they should be able to create a new student' do
+        visit new_student_path
+
+        fill_in 'student[first_name]', with: 'Rose'
+        fill_in 'student[last_name]', with: 'Tyler'
+        click_button 'Create Student'
+
+        new_student = Student.last
+
+        expect(current_path).to eq(student_path(new_student))
+      end
+    end
+  end
 end
