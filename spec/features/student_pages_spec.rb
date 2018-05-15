@@ -3,8 +3,19 @@ require 'rails_helper'
 RSpec.describe 'Student Pages' do
   before :each do
     @student1 = Student.create!(first_name: 'Jude', last_name: 'Dutton')
-    @student2 = Student.create!(first_name: 'Sally', last_name: 'Sparrow')
+    @student2 = Student.create!(first_name: 'The', last_name: 'Doctor')
     @student3 = Student.create!(first_name: 'Jack', last_name: 'Harkness')
+
+    @address1 = Address.create!(description: 'Permanent address', 
+                                street_address: '555 Not A Real Street',
+                                city: 'Notacity',
+                                state: 'Notastate',
+                                zip_code: 00000, student_id: @student2.id)
+@address2 = Address.create!(description: 'Summer address',
+                            street_address: '000 The Doctor Way',
+                            city: 'Gallifrey',
+                            state: 'Kastaberous',
+                            zip_code: 00001, student_id: @student2.id)
   end
 
   context '/students' do
@@ -54,6 +65,21 @@ RSpec.describe 'Student Pages' do
 
         expect(page).to_not have_content("#{@student1.first_name} #{@student1.last_name}")
         expect(page).to_not have_content("#{@student3.first_name} #{@student3.last_name}")
+      end
+
+      it 'they should see all of the student\'s addresses' do
+        visit student_path(@student2)
+
+        expect(page).to have_content(@address1.description)
+        expect(page).to have_content(@address1.street_address)
+        expect(page).to have_content(@address1.city)
+        expect(page).to have_content(@address1.state)
+        expect(page).to have_content(@address1.zip_code)
+        expect(page).to have_content(@address2.description)
+        expect(page).to have_content(@address2.street_address)
+        expect(page).to have_content(@address2.city)
+        expect(page).to have_content(@address2.state)
+        expect(page).to have_content(@address2.zip_code)
       end
     end
   end
