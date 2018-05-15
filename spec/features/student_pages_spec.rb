@@ -18,4 +18,17 @@ RSpec.describe 'Student Pages' do
       end
     end
   end
+
+  context '/students/:id' do
+    describe 'A user visits the a specific students page' do
+      it 'they should see the specific student\'s name' do
+        visit student_path(@student2)
+
+        expect(page).to have_content("#{@student2.first_name} #{@student2.last_name}")
+
+        expect(page).to_not have_content("#{@student1.first_name} #{@student1.last_name}")
+        expect(page).to_not have_content("#{@student3.first_name} #{@student3.last_name}")
+      end
+    end
+  end
 end
