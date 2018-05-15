@@ -47,4 +47,23 @@ RSpec.describe 'Student Pages' do
       end
     end
   end
+
+  context 'students/:id/edit' do
+    describe 'A user visits the edit student page' do
+      it 'they should be able to edit student details' do
+        visit edit_student_path(@student3)
+
+        new_first_name = 'Face Of'
+        new_last_name = 'Bo'
+
+        fill_in 'student[first_name]', with: new_first_name
+        fill_in 'student[last_name]', with: new_last_name
+        click_button 'Update Student'
+
+        expect(current_path).to eq(student_path(@student2))
+        expect(page).to have_content(new_first_name)
+        expect(page).to have_content(new_last_name)
+      end
+    end
+  end
 end
