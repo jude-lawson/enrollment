@@ -16,6 +16,32 @@ RSpec.describe 'Student Pages' do
         expect(page).to have_content("#{@student2.first_name} #{@student2.last_name}")
         expect(page).to have_content("#{@student3.first_name} #{@student3.last_name}")
       end
+
+      it 'they should be able to click on any students name and be taken to the correct show page' do
+        visit students_path
+
+        click_link("#{@student1.first_name} #{@student1.last_name}")
+
+        expect(current_path).to eq(student_path(@student1))
+        expect(page).to have_content(@student1.first_name)
+        expect(page).to have_content(@student1.last_name)
+
+        visit students_path
+
+        click_link("#{@student2.first_name} #{@student2.last_name}")
+
+        expect(current_path).to eq(student_path(@student2))
+        expect(page).to have_content(@student2.first_name)
+        expect(page).to have_content(@student2.last_name)
+
+        visit students_path
+
+        click_link("#{@student3.first_name} #{@student3.last_name}")
+
+        expect(current_path).to eq(student_path(@student3))
+        expect(page).to have_content(@student3.first_name)
+        expect(page).to have_content(@student3.last_name)
+      end
     end
   end
 
