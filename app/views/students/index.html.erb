@@ -2,6 +2,9 @@
 
 <ul>
 <% @students.each do |student| %>
-  <li><%= student.first_name %> <%= student.last_name %></li>
+  <li id='student-<%= student.id %>'>
+    <%= student.first_name %> <%= student.last_name %>
+    <%= link_to 'Delete', student_path(student), method: :delete %>
+  </li>
 <% end %>
 </ul>

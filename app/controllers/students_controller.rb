@@ -25,6 +25,11 @@ class StudentsController < ApplicationController
     redirect_to student_path(updated_student[1].id)
   end
 
+  def destroy
+    Student.find(params[:id]).destroy
+    redirect_to students_path
+  end
+
   private
 
   def student_params

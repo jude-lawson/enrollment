@@ -66,4 +66,26 @@ RSpec.describe 'Student Pages' do
       end
     end
   end
+
+  context '/students' do
+    describe 'A user visits the students page' do
+      it 'they should be able to delete a student' do
+        visit students_path
+
+        within("#student-" + @student1.id.to_s) do
+          click_link('Delete')
+        end
+
+        expect(current_path).to eq(students_path)
+        expect(page).to have_content(@student3.first_name)
+        expect(page).to have_content(@student3.last_name)
+
+        expect(page).to have_content(@student2.first_name)
+        expect(page).to have_content(@student2.last_name)
+
+        expect(page).to_not have_content(@student1.first_name)
+        expect(page).to_not have_content(@student1.last_name)
+      end
+    end
+  end
 end
